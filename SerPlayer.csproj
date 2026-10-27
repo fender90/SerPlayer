@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <AssemblyName>SerPlayer</AssemblyName>
+    <Product>SER Player</Product>
+    <AssemblyTitle>SER Player</AssemblyTitle>
+    <Description>Play .ser astronomy videos</Description>
+    <Company>Vesperis Labs</Company>
+    <Authors>Vesperis Labs</Authors>
+    <Copyright>© 2026 Vesperis Labs. Licensed under CC BY 4.0.</Copyright>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <!-- One self-contained file: the .NET runtime is bundled, so nothing has to be downloaded or installed separately.
+         The same exe is the app and, when named SerPlayer-Setup*.exe, its own installer. -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- tests\Harness is its own project -->
+    <Compile Remove="tests\**" />
+    <None Remove="tests\**" />
+    <EmbeddedResource Remove="tests\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Written out by the installer as the .ser file-type icon -->
+    <EmbeddedResource Include="app.ico" LogicalName="SerPlayer.app.ico" />
+    <!-- Setup wizard artwork -->
+    <EmbeddedResource Include="hero.jpg" LogicalName="SerPlayer.hero.jpg" />
+    <!-- License and notices: written next to the exe by the installer, and copied beside the built exe -->
+    <EmbeddedResource Include="LICENSE.txt" LogicalName="SerPlayer.LICENSE.txt" />
+    <EmbeddedResource Include="THIRD-PARTY-NOTICES.txt" LogicalName="SerPlayer.THIRD-PARTY-NOTICES.txt" />
+    <None Include="LICENSE.txt;THIRD-PARTY-NOTICES.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+  </ItemGroup>
+  <!-- The Windows Desktop runtime pack ships WPF's native DLLs; this WinForms app never loads them. Leaving them out keeps
+       the publish output to a single exe (nothing extracted to %TEMP% at startup). -->
+  <Target Name="DropUnusedWpfNatives" AfterTargets="ComputeResolvedFilesToPublishList">
+    <ItemGroup>
+      <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)"
+        Condition="'%(Filename)' == 'D3DCompiler_47_cor3' Or '%(Filename)' == 'PenImc_cor3' Or '%(Filename)' == 'PresentationNative_cor3' Or '%(Filename)' == 'vcruntime140_cor3' Or '%(Filename)' == 'wpfgfx_cor3'" />
+    </ItemGroup>
+  </Target>
+</Project>

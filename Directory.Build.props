@@ -1,0 +1,8 @@
+<Project>
+  <!-- One version for the app and its installer (build.ps1 reads it from here). -->
+  <PropertyGroup>
+    <Version>1.0.3</Version>
+    <!-- The plain version everywhere (exe properties, setup, About, Settings → Apps): no "+<git commit>" suffix. -->
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+</Project>

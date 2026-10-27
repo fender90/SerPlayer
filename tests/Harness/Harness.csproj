@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Headless test harness: compiles the app's sources (minus Program.cs) into a console exe.
+       Run: bin/Release/net8.0-windows/harness.exe [decode] [brand] -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <RootNamespace>SerPlayer</RootNamespace>
+    <AssemblyName>harness</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\*.cs" Exclude="..\..\Program.cs" />
+    <EmbeddedResource Include="..\..\app.ico" LogicalName="SerPlayer.app.ico" />
+    <EmbeddedResource Include="..\..\hero.jpg" LogicalName="SerPlayer.hero.jpg" />
+    <EmbeddedResource Include="..\..\LICENSE.txt" LogicalName="SerPlayer.LICENSE.txt" />
+    <EmbeddedResource Include="..\..\THIRD-PARTY-NOTICES.txt" LogicalName="SerPlayer.THIRD-PARTY-NOTICES.txt" />
+  </ItemGroup>
+</Project>
